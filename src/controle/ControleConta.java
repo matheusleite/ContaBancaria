@@ -49,4 +49,18 @@ public class ControleConta {
         return message;
     }
     
+    public void sacar(String senha, double valor){
+        double saldo = conta.getSaldo();
+        if(conta.getSenha().equals(senha)){
+            if(saldo>=valor){
+                saldo-=valor;
+                System.out.println("Seu novo saldo é de R$"+saldo);
+            }else{
+                System.out.println("Saldo insuficiente! \n");
+            }
+            }else{
+            System.out.println("Senha inválida! \n");
+        }
+    }
+    
 }

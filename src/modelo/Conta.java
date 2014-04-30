@@ -16,11 +16,18 @@ public class Conta {
     private String agencia;
     private String titular;
     private double saldo;
+    private String senha;
     
     public Conta() {
     
     }
 
+    public void setSenha(String senha){
+        this.senha = senha;
+    }
+    public String getSenha(){
+        return senha;
+    }
     /**
      * @return the numero
      */

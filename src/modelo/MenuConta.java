@@ -22,6 +22,7 @@ public class MenuConta {
         String entradaTeclado;
         char menuOpcao;
         ControleConta umControle = new ControleConta();
+        Conta umaConta = new Conta();
         do{
             
         System.out.println("Bem vindo ao Conta Bancaria.\n");
@@ -51,15 +52,36 @@ public class MenuConta {
                 entradaTeclado = leitorEntrada.readLine();
                 double umSaldo = Double.parseDouble(entradaTeclado);
                 
+                System.out.println("Digite a senha da conta: \n");
+                entradaTeclado = leitorEntrada.readLine();
+                String umaSenha = entradaTeclado;
+                
                 Conta conta = new Conta();
                 conta.setTitular(umTitular);
                 conta.setNumero(umNumero);
                 conta.setAgencia(umaAgencia);
                 conta.setSaldo(umSaldo);
+                conta.setSenha(umaSenha);
                 
                 String mensagem = umControle.adicionar(conta);
                 System.out.println(mensagem);
                 break;
+            case'2':
+                System.out.println("Digite sua senha: \n");
+                entradaTeclado = leitorEntrada.readLine();
+                umaSenha = entradaTeclado;
+                if(umaConta.getSenha().equals(umaSenha)){
+                    String titular = umaConta.getTitular();
+                    System.out.println("Bem vindo a sua conta, "+titular);
+                    System.out.println("\nSelecione uma opcao: \n");
+                    System.out.println("1- Saque");
+                    System.out.println("2- Depósito");
+                }else{
+                    System.out.println("Senha inválida");
+                }
+                break;
+                
+                
             default:
                 
         }
