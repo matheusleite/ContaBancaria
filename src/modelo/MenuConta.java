@@ -21,6 +21,7 @@ public class MenuConta {
         BufferedReader leitorEntrada = new BufferedReader(leitor);
         String entradaTeclado;
         char menuOpcao;
+        char opcao='0';
         ControleConta umControle = new ControleConta();
         ContaPoupanca contaPoupanca = new ContaPoupanca();
         ContaCorrente contaCorrente = new ContaCorrente();
@@ -103,27 +104,28 @@ public class MenuConta {
                 entradaTeclado = leitorEntrada.readLine();
                 umaSenha = entradaTeclado;
                 
-                if(umControle.validaConta(umNumero, umaSenha)==true){
+                Conta conta = umControle.validaConta(umNumero, umaSenha);
+                
+                if(umControle.validaConta(umNumero, umaSenha)==null){
+                    System.out.println("Dados incorretos, tente novamente!");
+                } else{
                     System.out.println("Bem vindo a sua conta, ");
                     System.out.println("\nSelecione uma opcao: \n");
                     System.out.println("1- Saque\n");
                     System.out.println("2- Depósito\n");
                     System.out.println("3- Saldo\n");
-                    
+                
                      entradaTeclado = leitorEntrada.readLine();
-                     char opcao = entradaTeclado.charAt(0);
-                     
+                     opcao = entradaTeclado.charAt(0);
+                }
                      switch(opcao){
                          case'1':
-                             System.out.println("Digite sua senha: \n");
-                             entradaTeclado = leitorEntrada.readLine();
-                             umaSenha = entradaTeclado;
                              
                              System.out.println("Insira o valor a ser sacado: ");
                              entradaTeclado = leitorEntrada.readLine();
                              double valor = Double.parseDouble(entradaTeclado);
                              
-                             String retorno = umControle.sacar(valor);
+                             String retorno = umControle.sacar(valor, conta);
                              System.out.println(retorno);
                          break;
                          case '2':
@@ -131,19 +133,15 @@ public class MenuConta {
                              entradaTeclado = leitorEntrada.readLine();
                              valor = Double.parseDouble(entradaTeclado);
                              
-                             retorno = umControle.depositar(valor);
+                             retorno = umControle.depositar(valor, conta);
                              System.out.println(retorno);
                          break;
                          case '3':
-                             System.out.println("Saldo disponível: R$ ");
+                             System.out.println("Saldo disponível: R$ "+conta.getSaldo());
                          break;
                          default:
                      
-                     }
-                    
-                }else{
-                    System.out.println("Senha inválida");
-                }
+                     }  
             break;
             default:
         }

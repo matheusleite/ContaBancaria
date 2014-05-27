@@ -22,19 +22,15 @@ public class ControleConta {
         listaContas = new ArrayList<>();
     }
     
-    Conta conta = new Conta();
-    
-    public String depositar(double deposito){
-        double umSaldo = conta.getSaldo();
-        umSaldo = (umSaldo + deposito);
-        conta.setSaldo(umSaldo);
+    public String depositar(double deposito, Conta umaConta){
+        double umSaldo = umaConta.getSaldo();
+        umSaldo += deposito;
+        umaConta.setSaldo(umSaldo);
         String message = ("Depósito efetuado com sucesso.");
         return message;
     }
-    public String sacar(double valor){
-        for (Conta umaConta: listaContas) {
+    public String sacar(double valor, Conta umaConta){
         double umSaldo = umaConta.getSaldo();
-        umSaldo = umSaldo - valor;
         umaConta.setSaldo(umSaldo);
         if(umSaldo>=valor){
                 umSaldo-=valor;
@@ -42,7 +38,6 @@ public class ControleConta {
             }else{
                 System.out.println("Saldo insuficiente! \n");
             }
-    }
         String message = ("Saque efetuado com sucesso.");
         return message;
     }
@@ -57,15 +52,15 @@ public class ControleConta {
         return message;
     }
     
-    public boolean validaConta(String numero, String senha){
+    public Conta validaConta(String numero, String senha){
         for (Conta umaConta : listaContas) {
             if (umaConta.getNumero().equals(numero)){
                 if(umaConta.getSenha().equals(senha)){
-                    return true;
+                    return umaConta;
                 }
             } 
             } 
-        return false;
+        return null;
     }
         
     
