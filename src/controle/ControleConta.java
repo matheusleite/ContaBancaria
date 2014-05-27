@@ -31,11 +31,19 @@ public class ControleConta {
         String message = ("Depósito efetuado com sucesso.");
         return message;
     }
-    public String debitar(double debito){
-        double umSaldo = conta.getSaldo();
-        umSaldo = (umSaldo - debito);
-        conta.setSaldo(umSaldo);
-        String message = ("Depósito efetuado com sucesso.");
+    public String sacar(double valor){
+        for (Conta umaConta: listaContas) {
+        double umSaldo = umaConta.getSaldo();
+        umSaldo = umSaldo - valor;
+        umaConta.setSaldo(umSaldo);
+        if(umSaldo>=valor){
+                umSaldo-=valor;
+                System.out.println("Seu novo saldo é de R$"+umSaldo);
+            }else{
+                System.out.println("Saldo insuficiente! \n");
+            }
+    }
+        String message = ("Saque efetuado com sucesso.");
         return message;
     }
     public String adicionar(Conta umaConta){
@@ -49,7 +57,19 @@ public class ControleConta {
         return message;
     }
     
-    public void sacar(String senha, double valor){
+    public boolean validaConta(String numero, String senha){
+        for (Conta umaConta : listaContas) {
+            if (umaConta.getNumero().equals(numero)){
+                if(umaConta.getSenha().equals(senha)){
+                    return true;
+                }
+            } 
+            } 
+        return false;
+    }
+        
+    
+    /*public void sacar(String senha, double valor){
         double saldo = conta.getSaldo();
         if(conta.getSenha().equals(senha)){
             if(saldo>=valor){
@@ -62,5 +82,6 @@ public class ControleConta {
             System.out.println("Senha inválida! \n");
         }
     }
+    */
     
 }

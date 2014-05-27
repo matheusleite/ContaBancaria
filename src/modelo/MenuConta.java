@@ -22,7 +22,8 @@ public class MenuConta {
         String entradaTeclado;
         char menuOpcao;
         ControleConta umControle = new ControleConta();
-        Conta umaConta = new Conta();
+        ContaPoupanca contaPoupanca = new ContaPoupanca();
+        ContaCorrente contaCorrente = new ContaCorrente();
         do{
             
         System.out.println("Bem vindo ao Conta Bancaria.\n");
@@ -56,34 +57,95 @@ public class MenuConta {
                 entradaTeclado = leitorEntrada.readLine();
                 String umaSenha = entradaTeclado;
                 
-                Conta conta = new Conta();
-                conta.setTitular(umTitular);
-                conta.setNumero(umNumero);
-                conta.setAgencia(umaAgencia);
-                conta.setSaldo(umSaldo);
-                conta.setSenha(umaSenha);
+                System.out.println("Digite o tipo de conta: \n 1- Conta Corrente\n 2- Conta Poupanca\n ");
+                entradaTeclado = leitorEntrada.readLine();
+                double tipo = Double.parseDouble(entradaTeclado);
                 
-                String mensagem = umControle.adicionar(conta);
-                System.out.println(mensagem);
+                if(tipo==1){
+                    System.out.println("Digite o rendimento de Poupanca: \n ");
+                    entradaTeclado = leitorEntrada.readLine();
+                    double rendimento = Double.parseDouble(entradaTeclado);
+                    
+                    contaPoupanca.setTitular(umTitular);
+                    contaPoupanca.setNumero(umNumero);
+                    contaPoupanca.setAgencia(umaAgencia);
+                    contaPoupanca.setSaldo(umSaldo);
+                    contaPoupanca.setSenha(umaSenha);
+                    contaPoupanca.setRendimento(rendimento);
+                    
+                    umControle.adicionar(contaPoupanca);
+                    
+                } else if(tipo==2){
+                    System.out.println("Digite o limite do Cheque Especial: \n ");
+                    entradaTeclado = leitorEntrada.readLine();
+                    double limite = Double.parseDouble(entradaTeclado);
+                    
+                    contaCorrente.setTitular(umTitular);
+                    contaCorrente.setNumero(umNumero);
+                    contaCorrente.setAgencia(umaAgencia);
+                    contaCorrente.setSaldo(umSaldo);
+                    contaCorrente.setSenha(umaSenha);
+                    contaCorrente.setLimiteChequeEspecial(limite);
+                    
+                    umControle.adicionar(contaCorrente);
+                    
+                } else{
+                    System.out.println("Tipo inválido! \n ");
+                }
+                
                 break;
             case'2':
+                System.out.println("Digite o numero da sua conta: \n");
+                entradaTeclado = leitorEntrada.readLine();
+                umNumero = entradaTeclado;
+                
                 System.out.println("Digite sua senha: \n");
                 entradaTeclado = leitorEntrada.readLine();
                 umaSenha = entradaTeclado;
-                if(umaConta.getSenha().equals(umaSenha)){
-                    String titular = umaConta.getTitular();
-                    System.out.println("Bem vindo a sua conta, "+titular);
+                
+                if(umControle.validaConta(umNumero, umaSenha)==true){
+                    System.out.println("Bem vindo a sua conta, ");
                     System.out.println("\nSelecione uma opcao: \n");
-                    System.out.println("1- Saque");
-                    System.out.println("2- Depósito");
+                    System.out.println("1- Saque\n");
+                    System.out.println("2- Depósito\n");
+                    System.out.println("3- Saldo\n");
+                    
+                     entradaTeclado = leitorEntrada.readLine();
+                     char opcao = entradaTeclado.charAt(0);
+                     
+                     switch(opcao){
+                         case'1':
+                             System.out.println("Digite sua senha: \n");
+                             entradaTeclado = leitorEntrada.readLine();
+                             umaSenha = entradaTeclado;
+                             
+                             System.out.println("Insira o valor a ser sacado: ");
+                             entradaTeclado = leitorEntrada.readLine();
+                             double valor = Double.parseDouble(entradaTeclado);
+                             
+                             String retorno = umControle.sacar(valor);
+                             System.out.println(retorno);
+                         break;
+                         case '2':
+                             System.out.println("Insira o valor a ser depositado: ");
+                             entradaTeclado = leitorEntrada.readLine();
+                             valor = Double.parseDouble(entradaTeclado);
+                             
+                             retorno = umControle.depositar(valor);
+                             System.out.println(retorno);
+                         break;
+                         case '3':
+                             System.out.println("Saldo disponível: R$ ");
+                         break;
+                         default:
+                     
+                     }
+                    
                 }else{
                     System.out.println("Senha inválida");
                 }
-                break;
-                
-                
+            break;
             default:
-                
         }
         
     } while(menuOpcao != 0);
