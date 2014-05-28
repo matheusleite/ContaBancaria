@@ -15,7 +15,7 @@ import modelo.Conta;
  */
 public class ControleConta {
     
-    private ArrayList<Conta> listaContas;
+    private final ArrayList<Conta> listaContas;
     
     //construtor
     public ControleConta(){
@@ -24,7 +24,7 @@ public class ControleConta {
     
     public String depositar(double deposito, Conta umaConta){
         double umSaldo = umaConta.getSaldo();
-        umSaldo += deposito;
+        umSaldo += deposito - 0.10;
         umaConta.setSaldo(umSaldo);
         String message = ("Depósito efetuado com sucesso.");
         return message;
